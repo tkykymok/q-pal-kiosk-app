@@ -36,7 +36,7 @@ dependencies:
   retrofit: ^4.0.1
   analyzer: ^5.10.0
   dio: ^5.1.1
-  json_annotation: ^4.8.0
+  json_annotation: ^4.8.1
   json_serializable: ^6.6.1
   dartz: ^0.10.1
   data_connection_checker_nulls: ^0.0.2

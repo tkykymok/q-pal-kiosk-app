@@ -5,8 +5,8 @@ import 'package:q_pal_kiosk_app/data/data_source/remote_data_source.dart';
 import 'package:q_pal_kiosk_app/data/network/app_api.dart';
 import 'package:q_pal_kiosk_app/data/network/dio_factory.dart';
 import 'package:q_pal_kiosk_app/data/network/network_info.dart';
-import 'package:q_pal_kiosk_app/data/repository/repository_impl.dart';
 import 'package:q_pal_kiosk_app/domain/repository/repository.dart';
+import 'package:q_pal_kiosk_app/domain/usecase/reservation_kiosk/create_reservation_usecase.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 final sharedPreferencesProvider =
@@ -44,10 +44,12 @@ final repositoryProvider = FutureProvider<Repository>((ref) async {
   return RepositoryImpl(remoteDataSource, networkInfo);
 });
 
-// final loginUseCaseProvider = FutureProvider<LoginUseCase>((ref) async {
-//   final repository = await ref.read(repositoryProvider.future);
-//   return LoginUseCase(repository);
-// });
+final createReservationUseCaseProvider =
+    FutureProvider<CreateReservationUseCase>((ref) async {
+  final repository = await ref.read(repositoryProvider.future);
+  return CreateReservationUseCase(repository);
+});
+
 //
 // final loginViewModelProvider =
 //     StateNotifierProvider.autoDispose<LoginViewModel, LoginState>((ref) {
