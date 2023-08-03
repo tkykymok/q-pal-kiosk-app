@@ -6,7 +6,9 @@ import 'package:q_pal_kiosk_app/data/network/app_api.dart';
 import 'package:q_pal_kiosk_app/data/network/dio_factory.dart';
 import 'package:q_pal_kiosk_app/data/network/network_info.dart';
 import 'package:q_pal_kiosk_app/domain/repository/repository.dart';
-import 'package:q_pal_kiosk_app/domain/usecase/reservation_kiosk/create_reservation_usecase.dart';
+import 'package:q_pal_kiosk_app/domain/usecase/reservation/create_reservation_usecase.dart';
+import 'package:q_pal_kiosk_app/domain/usecase/reservation/get_reservations_usecase.dart';
+import 'package:q_pal_kiosk_app/domain/usecase/reservation/get_waiting_info_usecase.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 final sharedPreferencesProvider =
@@ -48,6 +50,18 @@ final createReservationUseCaseProvider =
     FutureProvider<CreateReservationUseCase>((ref) async {
   final repository = await ref.read(repositoryProvider.future);
   return CreateReservationUseCase(repository);
+});
+
+final getReservationsUseCaseProvider =
+    FutureProvider<GetReservationsUseCase>((ref) async {
+  final repository = await ref.read(repositoryProvider.future);
+  return GetReservationsUseCase(repository);
+});
+
+final getWaitingInfoUseCaseProvider =
+    FutureProvider<GetWaitingInfoUseCase>((ref) async {
+  final repository = await ref.read(repositoryProvider.future);
+  return GetWaitingInfoUseCase(repository);
 });
 
 //

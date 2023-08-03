@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'create_reservation.dart';
+part of 'base_response.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
@@ -35,17 +35,3 @@ Object? _$nullableGenericToJson<T>(
   Object? Function(T value) toJson,
 ) =>
     input == null ? null : toJson(input);
-
-CreateReservationResponse _$CreateReservationResponseFromJson(
-        Map<String, dynamic> json) =>
-    CreateReservationResponse(
-      json['reservationNumber'] as int,
-      json['content'] as String,
-    );
-
-Map<String, dynamic> _$CreateReservationResponseToJson(
-        CreateReservationResponse instance) =>
-    <String, dynamic>{
-      'reservationNumber': instance.reservationNumber,
-      'content': instance.content,
-    };

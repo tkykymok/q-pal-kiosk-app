@@ -16,8 +16,15 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$ReservationKioskState {
-  List<Reservation> get reservations => throw _privateConstructorUsedError;
-  WaitingInfo get waitingInfo => throw _privateConstructorUsedError;
+// 予約一覧
+  List<Reservation> get reservations =>
+      throw _privateConstructorUsedError; // 最後尾待ち状況
+  WaitingInfo get waitingInfo =>
+      throw _privateConstructorUsedError; // ステータス毎予約一覧Map
+  Map<CardStatus, List<Reservation>> get reservationsMap =>
+      throw _privateConstructorUsedError; // 発券予約番号
+  int get reservationNumber => throw _privateConstructorUsedError; // 発券予約情報
+  String get encryptedText => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $ReservationKioskStateCopyWith<ReservationKioskState> get copyWith =>
@@ -30,7 +37,12 @@ abstract class $ReservationKioskStateCopyWith<$Res> {
           $Res Function(ReservationKioskState) then) =
       _$ReservationKioskStateCopyWithImpl<$Res, ReservationKioskState>;
   @useResult
-  $Res call({List<Reservation> reservations, WaitingInfo waitingInfo});
+  $Res call(
+      {List<Reservation> reservations,
+      WaitingInfo waitingInfo,
+      Map<CardStatus, List<Reservation>> reservationsMap,
+      int reservationNumber,
+      String encryptedText});
 }
 
 /// @nodoc
@@ -49,6 +61,9 @@ class _$ReservationKioskStateCopyWithImpl<$Res,
   $Res call({
     Object? reservations = null,
     Object? waitingInfo = null,
+    Object? reservationsMap = null,
+    Object? reservationNumber = null,
+    Object? encryptedText = null,
   }) {
     return _then(_value.copyWith(
       reservations: null == reservations
@@ -59,6 +74,18 @@ class _$ReservationKioskStateCopyWithImpl<$Res,
           ? _value.waitingInfo
           : waitingInfo // ignore: cast_nullable_to_non_nullable
               as WaitingInfo,
+      reservationsMap: null == reservationsMap
+          ? _value.reservationsMap
+          : reservationsMap // ignore: cast_nullable_to_non_nullable
+              as Map<CardStatus, List<Reservation>>,
+      reservationNumber: null == reservationNumber
+          ? _value.reservationNumber
+          : reservationNumber // ignore: cast_nullable_to_non_nullable
+              as int,
+      encryptedText: null == encryptedText
+          ? _value.encryptedText
+          : encryptedText // ignore: cast_nullable_to_non_nullable
+              as String,
     ) as $Val);
   }
 }
@@ -71,7 +98,12 @@ abstract class _$$_ReservationKioskStateCopyWith<$Res>
       __$$_ReservationKioskStateCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({List<Reservation> reservations, WaitingInfo waitingInfo});
+  $Res call(
+      {List<Reservation> reservations,
+      WaitingInfo waitingInfo,
+      Map<CardStatus, List<Reservation>> reservationsMap,
+      int reservationNumber,
+      String encryptedText});
 }
 
 /// @nodoc
@@ -87,6 +119,9 @@ class __$$_ReservationKioskStateCopyWithImpl<$Res>
   $Res call({
     Object? reservations = null,
     Object? waitingInfo = null,
+    Object? reservationsMap = null,
+    Object? reservationNumber = null,
+    Object? encryptedText = null,
   }) {
     return _then(_$_ReservationKioskState(
       reservations: null == reservations
@@ -97,6 +132,18 @@ class __$$_ReservationKioskStateCopyWithImpl<$Res>
           ? _value.waitingInfo
           : waitingInfo // ignore: cast_nullable_to_non_nullable
               as WaitingInfo,
+      reservationsMap: null == reservationsMap
+          ? _value._reservationsMap
+          : reservationsMap // ignore: cast_nullable_to_non_nullable
+              as Map<CardStatus, List<Reservation>>,
+      reservationNumber: null == reservationNumber
+          ? _value.reservationNumber
+          : reservationNumber // ignore: cast_nullable_to_non_nullable
+              as int,
+      encryptedText: null == encryptedText
+          ? _value.encryptedText
+          : encryptedText // ignore: cast_nullable_to_non_nullable
+              as String,
     ));
   }
 }
@@ -106,10 +153,16 @@ class __$$_ReservationKioskStateCopyWithImpl<$Res>
 class _$_ReservationKioskState implements _ReservationKioskState {
   const _$_ReservationKioskState(
       {required final List<Reservation> reservations,
-      required this.waitingInfo})
-      : _reservations = reservations;
+      required this.waitingInfo,
+      required final Map<CardStatus, List<Reservation>> reservationsMap,
+      this.reservationNumber = 0,
+      this.encryptedText = ""})
+      : _reservations = reservations,
+        _reservationsMap = reservationsMap;
 
+// 予約一覧
   final List<Reservation> _reservations;
+// 予約一覧
   @override
   List<Reservation> get reservations {
     if (_reservations is EqualUnmodifiableListView) return _reservations;
@@ -117,12 +170,31 @@ class _$_ReservationKioskState implements _ReservationKioskState {
     return EqualUnmodifiableListView(_reservations);
   }
 
+// 最後尾待ち状況
   @override
   final WaitingInfo waitingInfo;
+// ステータス毎予約一覧Map
+  final Map<CardStatus, List<Reservation>> _reservationsMap;
+// ステータス毎予約一覧Map
+  @override
+  Map<CardStatus, List<Reservation>> get reservationsMap {
+    if (_reservationsMap is EqualUnmodifiableMapView) return _reservationsMap;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableMapView(_reservationsMap);
+  }
+
+// 発券予約番号
+  @override
+  @JsonKey()
+  final int reservationNumber;
+// 発券予約情報
+  @override
+  @JsonKey()
+  final String encryptedText;
 
   @override
   String toString() {
-    return 'ReservationKioskState(reservations: $reservations, waitingInfo: $waitingInfo)';
+    return 'ReservationKioskState(reservations: $reservations, waitingInfo: $waitingInfo, reservationsMap: $reservationsMap, reservationNumber: $reservationNumber, encryptedText: $encryptedText)';
   }
 
   @override
@@ -133,12 +205,23 @@ class _$_ReservationKioskState implements _ReservationKioskState {
             const DeepCollectionEquality()
                 .equals(other._reservations, _reservations) &&
             (identical(other.waitingInfo, waitingInfo) ||
-                other.waitingInfo == waitingInfo));
+                other.waitingInfo == waitingInfo) &&
+            const DeepCollectionEquality()
+                .equals(other._reservationsMap, _reservationsMap) &&
+            (identical(other.reservationNumber, reservationNumber) ||
+                other.reservationNumber == reservationNumber) &&
+            (identical(other.encryptedText, encryptedText) ||
+                other.encryptedText == encryptedText));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType,
-      const DeepCollectionEquality().hash(_reservations), waitingInfo);
+  int get hashCode => Object.hash(
+      runtimeType,
+      const DeepCollectionEquality().hash(_reservations),
+      waitingInfo,
+      const DeepCollectionEquality().hash(_reservationsMap),
+      reservationNumber,
+      encryptedText);
 
   @JsonKey(ignore: true)
   @override
@@ -151,12 +234,21 @@ class _$_ReservationKioskState implements _ReservationKioskState {
 abstract class _ReservationKioskState implements ReservationKioskState {
   const factory _ReservationKioskState(
       {required final List<Reservation> reservations,
-      required final WaitingInfo waitingInfo}) = _$_ReservationKioskState;
+      required final WaitingInfo waitingInfo,
+      required final Map<CardStatus, List<Reservation>> reservationsMap,
+      final int reservationNumber,
+      final String encryptedText}) = _$_ReservationKioskState;
 
-  @override
+  @override // 予約一覧
   List<Reservation> get reservations;
-  @override
+  @override // 最後尾待ち状況
   WaitingInfo get waitingInfo;
+  @override // ステータス毎予約一覧Map
+  Map<CardStatus, List<Reservation>> get reservationsMap;
+  @override // 発券予約番号
+  int get reservationNumber;
+  @override // 発券予約情報
+  String get encryptedText;
   @override
   @JsonKey(ignore: true)
   _$$_ReservationKioskStateCopyWith<_$_ReservationKioskState> get copyWith =>

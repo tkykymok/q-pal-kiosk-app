@@ -1,13 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:q_pal_kiosk_app/domain/model/reservation.dart';
 import 'package:q_pal_kiosk_app/features/reservation_kiosk/reservtion_kiosk_view_model.dart';
-import 'package:q_pal_kiosk_app/resources/color_manager.dart';
 import 'package:q_pal_kiosk_app/resources/font_manager.dart';
 import 'package:q_pal_kiosk_app/resources/values_manager.dart';
 
 class NextReservationCard extends HookConsumerWidget {
-  const NextReservationCard({super.key});
+  final WaitingInfo waitingInfo;
+
+  const NextReservationCard({
+    super.key,
+    required this.waitingInfo,
+  });
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -28,17 +32,20 @@ class NextReservationCard extends HookConsumerWidget {
             Text('次の予約番号', style: TextStyle(fontSize: FontSize.s20)),
             SizedBox(height: AppSize.s8),
             Text(
-              '123',
+              waitingInfo.reservationNumber.toString(),
               style: TextStyle(
                 fontSize: FontSize.s40,
                 fontWeight: FontWeight.bold,
               ),
             ),
             SizedBox(height: AppSize.s8),
-            Text('3番目のご案内です', style: TextStyle(fontSize: FontSize.s20)),
+            Text(
+              '${waitingInfo.position}番目のご案内です',
+              style: TextStyle(fontSize: FontSize.s20),
+            ),
             SizedBox(height: AppSize.s4),
             Text(
-              '待ち時間目安: 15 分',
+              '待ち時間目安: ${waitingInfo.time} 分',
               style: TextStyle(
                 fontSize: FontSize.s16,
                 color: Colors.grey,

@@ -7,8 +7,9 @@ class MyApp extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return const MaterialApp(
-      title: 'Todo App',
-      home: ReservationKioskView(),
+      home: Scaffold(
+        body: ReservationKioskView(),
+      ),
     );
   }
 }

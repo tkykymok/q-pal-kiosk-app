@@ -1,17 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:q_pal_kiosk_app/resources/color_manager.dart';
+import 'package:q_pal_kiosk_app/domain/model/reservation.dart';
 import 'package:q_pal_kiosk_app/resources/font_manager.dart';
 import 'package:q_pal_kiosk_app/resources/values_manager.dart';
 
 class GuideCard extends HookConsumerWidget {
   final String title;
   final MaterialColor color;
+  final List<Reservation> reservations;
 
-  GuideCard({required this.title, required this.color});
+  const GuideCard({
+    super.key,
+    required this.title,
+    required this.color,
+    required this.reservations,
+  });
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    debugPrint(reservations.toString());
+
     return LayoutBuilder(
         builder: (BuildContext context, BoxConstraints constraints) {
       return SizedBox(
@@ -27,10 +35,10 @@ class GuideCard extends HookConsumerWidget {
             children: [
               Container(
                 width: double.infinity,
-                padding: EdgeInsets.all(AppSize.s12),
+                padding: const EdgeInsets.all(AppSize.s12),
                 decoration: BoxDecoration(
                   color: color,
-                  borderRadius: BorderRadius.only(
+                  borderRadius: const BorderRadius.only(
                     topLeft: Radius.circular(AppSize.s16),
                     topRight: Radius.circular(AppSize.s16),
                   ),
@@ -38,7 +46,7 @@ class GuideCard extends HookConsumerWidget {
                 child: Text(
                   title,
                   textAlign: TextAlign.start,
-                  style: TextStyle(
+                  style: const TextStyle(
                     color: Colors.white,
                     fontSize: AppSize.s18,
                     fontWeight: FontWeightManager.semiBold,
@@ -49,7 +57,7 @@ class GuideCard extends HookConsumerWidget {
                 child: SingleChildScrollView(
                   child: Wrap(
                     children: List.generate(
-                      3,
+                      reservations.length,
                       (index) => Padding(
                         padding: const EdgeInsets.all(AppSize.s8),
                         child: Container(
@@ -61,8 +69,8 @@ class GuideCard extends HookConsumerWidget {
                             borderRadius: BorderRadius.circular(10),
                           ),
                           child: Text(
-                            '${index + 100}',
-                            style: TextStyle(fontSize: FontSize.s24),
+                            '${reservations[index].reservationNumber}',
+                            style: const TextStyle(fontSize: FontSize.s24),
                           ),
                         ),
                       ),

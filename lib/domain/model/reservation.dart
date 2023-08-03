@@ -50,5 +50,8 @@ class CreatedReservation {
   int reservationNumber;
   String content;
 
-  CreatedReservation(this.reservationNumber, this.content);
+  CreatedReservation({
+    required this.reservationNumber,
+    required this.content,
+  });
 }

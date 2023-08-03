@@ -8,6 +8,8 @@ import 'package:q_pal_kiosk_app/data/request/create_reservation.dart';
 import 'package:q_pal_kiosk_app/domain/model/reservation.dart';
 
 abstract class Repository {
+  Future<Either<Failure, List<Reservation>>> getTodayReservations();
+  Future<Either<Failure, WaitingInfo>> getLineEndWaitTime();
   Future<Either<Failure, CreatedReservation>> createReservation(
       CreateReservationRequest request);
 }
@@ -17,6 +19,46 @@ class RepositoryImpl extends Repository {
   final NetWorkInfo _netWorkInfo;
 
   RepositoryImpl(this._remoteDataSource, this._netWorkInfo);
+
+  @override
+  Future<Either<Failure, List<Reservation>>> getTodayReservations() async {
+    if (await _netWorkInfo.isConnected) {
+      try {
+        final response = await _remoteDataSource.getTodayReservations();
+
+        // return data
+        List<Reservation> reservations = [];
+        response.data?.forEach((element) {
+          reservations.add(element.toDomain());
+        });
+        return Right(reservations);
+      } catch (error) {
+        return Left(ErrorHandler.handle(error).failure);
+      }
+    } else {
+      // return connection error
+      return Left(Failure(ResponseCode.NO_INTERNET_CONNECTION,
+          ResponseMessage.NO_INTERNET_CONNECTION));
+    }
+  }
+
+  @override
+  Future<Either<Failure, WaitingInfo>> getLineEndWaitTime() async {
+    if (await _netWorkInfo.isConnected) {
+      try {
+        final response = await _remoteDataSource.getLineEndWaitTime();
+
+        // return data
+        return Right(response.data.toDomain());
+      } catch (error) {
+        return Left(ErrorHandler.handle(error).failure);
+      }
+    } else {
+      // return connection error
+      return Left(Failure(ResponseCode.NO_INTERNET_CONNECTION,
+          ResponseMessage.NO_INTERNET_CONNECTION));
+    }
+  }
 
   @override
   Future<Either<Failure, CreatedReservation>> createReservation(

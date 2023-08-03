@@ -1,5 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-part 'create_reservation.g.dart';
+part 'base_response.g.dart';
 
 @JsonSerializable(genericArgumentFactories: true)
 class BaseResponse<T extends dynamic> {
@@ -20,22 +20,4 @@ class BaseResponse<T extends dynamic> {
   // Provide a method to convert 'T' to JSON.
   Map<String, dynamic> toJson(Object Function(T value) toJsonT) =>
       _$BaseResponseToJson(this, toJsonT);
-}
-
-@JsonSerializable()
-class CreateReservationResponse {
-  @JsonKey(name: "reservationNumber")
-  int reservationNumber;
-
-  @JsonKey(name: "content")
-  String content;
-
-  CreateReservationResponse(
-    this.reservationNumber,
-    this.content,
-  );
-
-  factory CreateReservationResponse.fromJson(Map<String, dynamic> json) =>
-      _$CreateReservationResponseFromJson(json);
-  Map<String, dynamic> toJson() => _$CreateReservationResponseToJson(this);
 }
